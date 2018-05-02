@@ -39,13 +39,21 @@ int main()
 
 void encryptFile()
 {
+	string inputfileName;
+	string keyfileName;
 	string inputstring;
 	string keystring;
 	const char* inputc;
 	const char* keyc;
 	int xy;
-	ifstream inputfile("Text.txt");
-	ifstream keyfile("key.txt");
+
+	cout << "Bitte geben sie den Dateinamen der Klartext Datei an:\n";
+	cin >> inputfileName;
+	cout << "Bitte geben sie den Dateinamen der Schluesseldatei an:\n";
+	cin >> keyfileName;
+
+	ifstream inputfile(inputfileName);
+	ifstream keyfile(keyfileName);
 	getline(inputfile, inputstring);
 	inputfile.close();
 	getline(keyfile, keystring);
@@ -79,13 +87,19 @@ void encryptFile()
 
 void decryptFile()
 {
+	string inputfileName;
+	string keyfileName;
 	string inputstring;
 	string keystring;
 	const char* inputc;
 	const char* keyc;
 	int xy;
-	ifstream inputfile("crypt.txt");
-	ifstream keyfile("key.txt");
+	cout << "Bitte geben sie den Dateinamen der verschluesselten Datei an:\n";
+	cin >> inputfileName;
+	cout << "Bitte geben sie den Dateinamen der Schluesseldatei an:\n";
+	cin >> keyfileName;
+	ifstream inputfile(inputfileName);
+	ifstream keyfile(keyfileName);
 
 	getline(inputfile, inputstring);
 	inputfile.close();
