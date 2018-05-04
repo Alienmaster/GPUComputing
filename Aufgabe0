@@ -11,6 +11,8 @@ void drawRhombus(GLfloat color[]);
 void redisplay(void);
 void reshape(int w, int h);
 void spindisplay(void);
+void printArrowKey(int key, int x, int y);
+void printKey(unsigned char key,int x, int y);
 
 static GLfloat spin = 0.0;
 
@@ -21,24 +23,27 @@ int _tmain(int argc, char **argv)
 	drawRhombus(colorA);
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
-	glutInitWindowSize(600, 400);
+	glutInitWindowSize(800, 600);
 	glutInitWindowPosition(100, 100);
-	glutCreateWindow(argv[0]);
+	glutCreateWindow("Hallo Welt");
 	glutDisplayFunc(redisplay);
 	glutReshapeFunc(reshape);
-	glutIdleFunc(spindisplay);
+	//glutIdleFunc(spindisplay);
+	glutSpecialFunc(printArrowKey);
+	glutKeyboardFunc(printKey);
 	glutMainLoop();
+
 	return 0;
 }
 
 void drawRhombus(GLfloat color[])
 {
-	glBegin(GL_QUADS);
+	glBegin(GL_TRIANGLESTRIP);
 	glColor3fv(color);
-	glVertex2f(0.0, 0.0);
-	glVertex2f(1.0, 0.0);
-	glVertex2f(1.5, 1.118);
-	glVertex2f(0.5, 1.118);
+	glVertex3f(0.0, 0.0, 0.0);
+	glVertex3f(1.0, 0.0, 0.0);
+	glVertex3f(1.5, 1.118, 0.0);
+	glVertex3f(0.5, 1.118, 0.0);
 	glEnd();
 
 }
@@ -56,12 +61,14 @@ void redisplay(void)
 	glutSwapBuffers();
 }
 
+/*
 void spindisplay(void)
 {
 	spin = spin + 2.0;
 	if (spin > 360.0) spin = spin - 360.0;
 	glutPostRedisplay();
 }
+*/
 
 void reshape(int w, int h)
 {
@@ -71,4 +78,19 @@ void reshape(int w, int h)
 	glOrtho(-50.0, 50.0, -50.0, 50.0, -1.0, 1.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+void printArrowKey(int key, int x, int y)
+{
+	if (int(key) = 27)
+	cout << int(key);
+}
+
+void printKey(unsigned char key,int x, int y)
+{
+	if (key == 27)
+	{
+		exit(0);
+	}
+	cout << key;
 }
