@@ -1,0 +1,74 @@
+// vierzehn.cpp : Definiert den Einstiegspunkt für die Konsolenanwendung.
+//
+
+#include "stdafx.h"
+#include <iostream>
+#include <GL/glut.h>
+
+using namespace std;
+
+void drawRhombus(GLfloat color[]);
+void redisplay(void);
+void reshape(int w, int h);
+void spindisplay(void);
+
+static GLfloat spin = 0.0;
+
+int _tmain(int argc, char **argv)
+{
+	GLfloat colorA[] = {1.0, 1.0, 1.0};
+	cout << "Hello World";
+	drawRhombus(colorA);
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
+	glutInitWindowSize(600, 400);
+	glutInitWindowPosition(100, 100);
+	glutCreateWindow(argv[0]);
+	glutDisplayFunc(redisplay);
+	glutReshapeFunc(reshape);
+	glutIdleFunc(spindisplay);
+	glutMainLoop();
+	return 0;
+}
+
+void drawRhombus(GLfloat color[])
+{
+	glBegin(GL_QUADS);
+	glColor3fv(color);
+	glVertex2f(0.0, 0.0);
+	glVertex2f(1.0, 0.0);
+	glVertex2f(1.5, 1.118);
+	glVertex2f(0.5, 1.118);
+	glEnd();
+
+}
+
+void redisplay(void)
+{
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glShadeModel(GL_FLAT);
+	glPushMatrix();
+	glRotatef(spin, 0.0, 0.0, 1.0);
+	glColor3f(1.0, 1.0, 1.0);
+	glRectf(-25.0, -25.0, 25.0, 25.0);
+	glPopMatrix();
+	glutSwapBuffers();
+}
+
+void spindisplay(void)
+{
+	spin = spin + 2.0;
+	if (spin > 360.0) spin = spin - 360.0;
+	glutPostRedisplay();
+}
+
+void reshape(int w, int h)
+{
+	glViewport(0, 0, w, h);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-50.0, 50.0, -50.0, 50.0, -1.0, 1.0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
