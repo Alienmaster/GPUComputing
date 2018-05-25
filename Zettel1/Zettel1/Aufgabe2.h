@@ -45,10 +45,14 @@ void hourglass() //Dedicated to Pacman <3
 		glVertex4d(x, -4, z, 1.0);
 	}
 	glEnd();
+}
+
+void translation() //From local to global Modelmatrix
+{
+	hourglass();
 	glPopMatrix();
 	glutSwapBuffers();
 }
-
 void printArrowKey(int key, int x, int y)
 {
 	switch (key)

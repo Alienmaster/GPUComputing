@@ -6,10 +6,13 @@
 
 using namespace std;
 
-static GLfloat spin = 0.0;
 double transA = 0.0;
 double transB = 0.0;
 int Vertices = 50;
+double eyex = 0.0;
+double eyey = 2.0;
+double eyez = 5.0;
+int Displaylist;
 
 
 void triangle(GLdouble color[])
@@ -22,41 +25,55 @@ void triangle(GLdouble color[])
 	glEnd();
 }
 
-void translation() //From local to global Modelmatrix
+void initDisplayList()
 {
+	GLdouble blue[] = { 0.0, 0.0, 1.0, 1.0 };
+	
+	int Displaylist = glGenLists(1);
+	cout << Displaylist;
+	
+	glNewList(Displaylist, GL_COMPILE);
+	
 	glPushMatrix();
-	glTranslated(3, 4, 4);
-	GLdouble color[] = { 1.0, 0.5, 0.0, 1.0 };
-	triangle(color);
+	glRotatef(transA, 0, 0, 1);
+	glTranslated(0, 0, 0);
+	triangle(blue);
 	glPopMatrix();
-	// first Object
-	glPushMatrix();
-	glTranslated(3, 4, 4);
-	triangle(color);
-	glPopMatrix();
-	// second Object
-	glPushMatrix();
-	glTranslated(1, transA, 3);
-	glRotatef(30, 0, 1, 0);
-	glScalef(2, 2, 2);
-	triangle(color);
-	glTranslated(transA, 0, 3);
-	glRotatef(30, 0, 1, 0);
-	glScalef(2, 2, 2);
-	triangle(color);
-	glPopMatrix();
-	glutSwapBuffers();
+	glEndList();
+
 }
 
-void redisplay(void) // Would like to get this function into the cpp File :)
+void translation() //From local to global Modelmatrix
 {
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glShadeModel(GL_FLAT);
-	glPushMatrix();
-	glRotatef(spin, 0.0, 0.0, 1.0);
-	glColor4d(1.0, 1.0, 1.0, 1.0);
-	translation();
+	GLdouble blue[] = { 0.0, 0.0, 1.0, 1.0 };
+	GLdouble red[] = { 1.0, 0.0, 0.0, 1.0 };
+	GLdouble green[] = { 0.0, 1.0, 0.0, 1.0 };
+	glCallList(Displaylist);
+	////first Object
+	//glPushMatrix();
+	//glRotatef(transA, 0, 0, 1);
+	//glTranslated(0, 0, 0);
+	//triangle(blue);
+	//glPopMatrix();
+
+	////second Object
+	//glPushMatrix();
+	//glTranslated(4, 4, 4);
+	//triangle(red);
+	//glPopMatrix();
+
+	////third and fourth Object
+	//glPushMatrix();
+	//glTranslated(1, 0, 3);
+	//glRotatef(30, 0, 1, 0);
+	//glScalef(2, 2, 2);
+	//triangle(green);
+	//glTranslated(0, 0, 3);
+	//glRotatef(30, 0, 1, 0);
+	//glScalef(2, 2, 2);
+	//triangle(green);
+	glPopMatrix();
+	glutSwapBuffers();
 }
 
 void printArrowKey(int key, int x, int y)
@@ -78,23 +95,26 @@ void printKey(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
-	case 27: // ESC
+	case 27: //ESC
 		exit(0);
 		break;
-	case 43: // +
+	case 43: //+
 		if (Vertices < 50)
 		{
 			Vertices++;
 		}
 		break;
-	case 45: // -
+	case 45: //-
 		if (Vertices > 4)
 		{
 			Vertices--;
 		}
 		break;
-	case 97: // a
+	case 97: //a
 		transA++;
+		break;
+	case 115: //s
+		transA--;
 		break;
 	}
 	cout << int(key); //Print key pressed
