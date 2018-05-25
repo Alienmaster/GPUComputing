@@ -48,7 +48,10 @@ void translation() //From local to global Modelmatrix
 	GLdouble blue[] = { 0.0, 0.0, 1.0, 1.0 };
 	GLdouble red[] = { 1.0, 0.0, 0.0, 1.0 };
 	GLdouble green[] = { 0.0, 1.0, 0.0, 1.0 };
-	glCallList(Displaylist);
+	glPushMatrix();
+	cout << Displaylist;
+	glCallList(1);	//Bekommt aktuell immer eine 0 zurück. Wenn hartkodiert eine 1 eingetragen
+					//wird geht es. Displaylist =! Displaylist *shrugg*
 	////first Object
 	//glPushMatrix();
 	//glRotatef(transA, 0, 0, 1);
