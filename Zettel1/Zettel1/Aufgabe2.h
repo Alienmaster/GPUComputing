@@ -53,7 +53,7 @@ void translation() //From local to global Modelmatrix
 	glPopMatrix();
 	glutSwapBuffers();
 }
-void printArrowKey(int key, int x, int y)
+void ArrowKey(int key, int x, int y)
 {
 	switch (key)
 	{
