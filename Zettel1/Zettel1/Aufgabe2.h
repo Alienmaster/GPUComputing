@@ -68,7 +68,7 @@ void ArrowKey(int key, int x, int y)
 	cout << key; // Print key pressed
 }
 
-void printKey(unsigned char key, int x, int y)
+void pressKey(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
